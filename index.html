@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himanshu Sah | Pro Web Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-pink: #c00a5e; 
+            --dark-bg: #1a1a1a;
+            --whatsapp-green: #25d366;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        /* DARK MODE DEFINITION */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #f4f4f4;
+            --card-bg: #1e1e1e;
+            --dark-bg: #000000;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background: var(--bg-color); 
+            color: var(--text-color); 
+            transition: background 0.3s, color 0.3s; 
+        }
+
+        /* VISITOR BAR */
+        .visitor-bar { background: #111; color: #fff; text-align: center; padding: 8px; font-size: 0.8rem; position: sticky; top: 0; z-index: 1000; }
+        .live-dot { height: 10px; width: 10px; background: var(--whatsapp-green); border-radius: 50%; display: inline-block; margin-right: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+        /* NAV */
+        nav { background: var(--dark-bg); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+        .login-trigger { background: transparent; color: white; border: 1px solid white; padding: 5px 15px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .login-trigger:hover { background: white; color: black; }
+        .theme-btn { background: var(--brand-pink); color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; }
+
+        /* HERO */
+        .hero { background: var(--brand-pink); color: white; text-align: center; padding: 80px 20px; }
+        .hero h1 { font-size: 3.5rem; margin: 0; letter-spacing: 2px; }
+        .call-sub-btn { background: var(--whatsapp-green); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; margin-top: 20px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 1.1rem; }
+
+        /* SECTION & CARDS */
+        .section { padding: 50px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .card { background: var(--card-bg); border: 2px solid var(--brand-pink); border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        /* PORTFOLIO IMAGES */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .img-box { border-radius: 15px; overflow: hidden; cursor: pointer; border: 1px solid #ddd; transition: 0.3s; }
+        .img-box img { width: 100%; height: 220px; object-fit: cover; display: block; transition: 0.5s; }
+        .img-box:hover { transform: translateY(-5px); border-color: var(--brand-pink); }
+        .img-box:hover img { transform: scale(1.1); }
+
+        /* FORMS */
+        .input-group { margin-bottom: 15px; text-align: left; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; background: var(--card-bg); color: var(--text-color); }
+        .btn-wa { background: var(--whatsapp-green); color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+
+        /* MODAL POPUP (LOGIN) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 5000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--card-bg); padding: 35px; border-radius: 25px; width: 90%; max-width: 400px; position: relative; border: 2px solid var(--brand-pink); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-color); }
+
+        /* LIGHTBOX FOR IMAGES */
+        #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 6000; justify-content: center; align-items: center; }
+        #lightbox img { max-width: 90%; max-height: 85%; border-radius: 10px; border: 4px solid white; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+        /* FLOATING */
+        .floating-actions { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 4000; }
+        .fab { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: none; cursor: pointer; transition: 0.3s; }
+        .fab:hover { transform: scale(1.1); }
+        .fab-map { background: #4285F4; color: white; font-size: 24px; text-decoration: none; }
+        .fab-wa { background: var(--whatsapp-green); }
+
+        footer { text-align: center; padding: 40px; background: #000; color: #888; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <div class="visitor-bar">
+        <span class="live-dot"></span> Live: <span id="liveCount">43</span> active clients on Himanshu's profile
+    </div>
+
+    <nav>
+        <div style="color:white; font-weight:bold; font-size: 1.2rem;">HIMANSHU SAH</div>
+        <div class="nav-links">
+            <a href="#work">Work</a>
+            <button class="theme-btn" onclick="toggleTheme()">🌓 Mode</button>
+            <button class="login-trigger" onclick="openModal('loginModal')">Login</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>HIMANSHU SAH WEB DEVELOPER </h1>
+        <button class="call-sub-btn" onclick="callHimanshu()">📞 Call Himanshu</button>
+        <p style="margin-top: 20px; font-weight: 300;">Web Developer | 4 Years Experience</p>
+    <h2> Adress </h2>
+<p>
+Araria RS, Kedia Tola Ward Number 4 ,PIN CODE 854312 ,call us click call 🔳.
+</header>
+
+    <div class="section">
+        <div class="card">
+            <h2 style="color:var(--brand-pink); margin-top:0;">🚀 Project Booking Form</h2>
+            <div class="input-group"><input type="text" id="h-name" placeholder="Full Name *"></div>
+            <div class="input-group"><input type="tel" id="h-phone" placeholder="Mobile Number *"></div>
+            <div class="input-group"><input type="text" id="h-addr" placeholder="Your Address / Location *"></div>
+            <div class="input-group"><input type="text" id="h-type" placeholder="Website Type (e.g. Shop, Portfolio) *"></div>
+            <button class="btn-wa" onclick="sendHireWA()">Confirm & Send to WhatsApp 🚀</button>
+        </div>
+    </div>
+
+    <div class="section" id="work">
+        <h2 style="margin-bottom: 10px;">Recent Work</h2>
+        <p style="font-size: 0.9rem; color: #888;">Touch any image to expand</p>
+        <div class="portfolio-grid">
+            <div class="img-box" onclick="popImage('images/web1.jpg')"><img src="images/web1.jpg" alt="Project 1"></div>
+            <div class="img-box" onclick="popImage('images/web2.jpg')"><img src="images/web2.jpg" alt="Project 2"></div>
+            <div class="img-box" onclick="popImage('images/web3.jpg')"><img src="images/web3.jpg" alt="Project 3"></div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2 style="color:var(--brand-pink); margin-top:0; text-align: center;">Customer Login</h2>
+            <div class="input-group"><input type="text" id="l-user" placeholder="Username / Email"></div>
+            <div class="input-group"><input type="password" id="l-pass" placeholder="Password"></div>
+            <button class="btn-wa" onclick="sendLoginWA()">Login via WhatsApp</button>
+        </div>
+    </div>
+
+    <div id="lightbox" onclick="this.style.display='none'"><img src="" id="lightboxImg"></div>
+
+    <div class="floating-actions">
+        <a href="https://maps.google.com" target="_blank" class="fab fab-map">📍</a>
+        <a href="https://wa.me/917485053208" class="fab fab-wa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="32">
+        </a>
+    </div>
+
+    <footer>
+        © 2026 Himanshu Sah | Web Developer | Araria, Bihar
+    </footer>
+
+    <script>
+        // --- 1. DARK MODE LOGIC ---
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        // Load preference on startup
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // --- 2. VISITOR COUNT ---
+        let v = 43; 
+        setInterval(() => { 
+            v += Math.floor(Math.random()*3)-1; 
+            if(v < 30) v = 35;
+            document.getElementById('liveCount').innerText=v; 
+        }, 4000);
+
+        // --- 3. MODAL & LIGHTBOX ---
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function popImage(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        // --- 4. CALL POPUP ---
+        function callHimanshu() {
+            if(confirm("Do you want to call Himanshu Sah?")) { 
+                window.location.href = "tel:+917485053208"; 
+            }
+        }
+
+        // --- 5. WHATSAPP LOGIC ---
+        function sendLoginWA() {
+            const u = document.getElementById('l-user').value;
+            const p = document.getElementById('l-pass').value;
+            if(!u || !p) { alert("Please fill login details"); return; }
+            window.open(`https://wa.me/917485053208?text=*LOGIN REQUEST*%0AUser: ${u}%0APass: ${p}`, '_blank');
+        }
+
+        function sendHireWA() {
+            const n = document.getElementById('h-name').value;
+            const p = document.getElementById('h-phone').value;
+            const a = document.getElementById('h-addr').value;
+            const t = document.getElementById('h-type').value;
+            if(!n || !p || !a || !t) { alert("All fields with * are required"); return; }
+            window.open(`https://wa.me/917485053208?text=*NEW BOOKING*%0AName: ${n}%0APhone: ${p}%0AAddress: ${a}%0AWeb: ${t}`, '_blank');
+        }
+    </script>
+</body>
+</html>
